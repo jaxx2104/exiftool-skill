@@ -158,9 +158,14 @@ exiftool-skill/
 ### 3.1 Distribution scope
 
 `tools/`, `vendor/`, `tests/`, `evals/`, `docs/`, and any `*-workspace/`
-sibling directories are **excluded** from the installed plugin payload via
-`.claude-plugin/plugin.json` `files` whitelist (or `.gitattributes
-export-ignore`). End users receive `skills/exiftool/` only.
+sibling directories are **excluded** from the installed plugin payload.
+
+The primary mechanism is the `files` (or equivalent include) field of
+`.claude-plugin/plugin.json`, which authoritatively declares what ships with
+the plugin regardless of how the plugin source is fetched. `.gitattributes
+export-ignore` is supplementary (only effective for `git archive`-based
+download paths). End users receive `skills/exiftool/` plus
+`.claude-plugin/`, `README.md`, `LICENSE`, and `CHANGELOG.md`.
 
 ### 3.2 Licensing
 
@@ -323,7 +328,7 @@ skills/exiftool/references/upstream/
 `mistakes.html` (→ `common-mistakes.md`), `idiosyncracies.html`,
 `install.html`.
 
-**From `html/TagNames/`** (~19 files for v1):
+**From `html/TagNames/`** (19 files for v1):
 - Foundational: `EXIF`, `Composite`, `XMP`, `IPTC`, `GPS`, `QuickTime`,
   `JPEG`, `PNG`, `Extra`.
 - MakerNote (major manufacturers): `Canon`, `Nikon`, `Sony`, `Fujifilm`,
@@ -538,7 +543,11 @@ Realistic, detailed, mixed-formality queries. **10 should-trigger** sample:
 - "drone footage from last weekend — extract the gps log as gpx so I can plot it"
 - "I have a CSV of camera serial numbers and need to find which jpg in the album was shot by which body"
 - "before I post these to instagram could you strip the metadata"
-- (5 more covering the remaining task categories)
+- "took these in tokyo with the camera clock still on PST, can you bump DateTimeOriginal +17h on everything in /Volumes/SD/DCIM"
+- "got a gpx from my watch, can you geotag the photos under ~/Pictures/2026-04-tokyo using it (geosync if needed, my camera was 30 sec ahead)"
+- "I converted these CR3s to TIFF in lightroom but the exif got stripped — can you copy the exif from each cr3 to the matching tiff next to it"
+- "give me a csv of every jpg under /Volumes/photo-library/ with Make, Model, LensModel, FocalLength, ISO so I can pivot in numbers"
+- "extract the embedded gps log from this gopro mp4 as a .gpx so I can drop it into google earth"
 
 **10 should-not-trigger** near-misses:
 
@@ -573,9 +582,13 @@ applied to `SKILL.md` frontmatter.
 
 ### 11.1 `.claude-plugin/marketplace.json`
 
+The marketplace name is `jaxx2104` (namespace), and the plugin inside it is
+`exiftool`. This makes the install incantation read as `exiftool@jaxx2104`,
+which is unambiguous (avoiding the awkward `exiftool@exiftool`).
+
 ```json
 {
-  "name": "exiftool",
+  "name": "jaxx2104",
   "owner": {
     "name": "jaxx2104",
     "url": "https://github.com/jaxx2104"
@@ -608,10 +621,13 @@ applied to `SKILL.md` frontmatter.
 
 1. **Plugin marketplace (recommended)**:
    `/plugin marketplace add jaxx2104/exiftool-skill` →
-   `/plugin install exiftool@exiftool`
-2. **`.skill` file**: `python -m scripts.package_skill skills/exiftool` →
-   manual install of the resulting `.skill`.
-3. **Manual clone**: `git clone` and symlink into `~/.claude/skills/`.
+   `/plugin install exiftool@jaxx2104`
+2. **`.skill` file**: package via the `package_skill` script bundled in the
+   `example-skills/skill-creator` skill (`python -m scripts.package_skill
+   skills/exiftool` from inside skill-creator), then manually install the
+   resulting `.skill` file.
+3. **Manual clone**: `git clone` and symlink `skills/exiftool` into
+   `~/.claude/skills/`.
 
 ### 11.4 README structure
 
@@ -631,7 +647,7 @@ applied to `SKILL.md` frontmatter.
 |----|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
 | M1 | Scaffolding                                                                                                              | New repo, `.claude-plugin/`, directory tree, `vendor/exiftool` submodule pinned, SKILL.md skeleton, README, LICENSE, CHANGELOG |
 | M2 | Hand-written `tasks/` (8 files) + `safety.md`                                                                            | Each file matches common template; ≥3 patterns per file; ≥10 pitfalls in catalog; cross-links resolve |
-| M3 | Upstream auto-generation                                                                                                 | `regen-references.sh`, `select-upstream.yaml` covers ~30 files, `html2md.py` operational, `INDEX.md` generated, output committed |
+| M3 | Upstream auto-generation                                                                                                 | `regen-references.sh`, `select-upstream.yaml` covers 29 files (10 from `html/` + 19 from `html/TagNames/`), `html2md.py` operational, `INDEX.md` generated, output committed |
 | M4 | Evals iteration                                                                                                          | `evals/evals.json` with 8 cases; `iteration-1/` complete; eval-viewer reviewed; feedback applied; `iteration-2/` stable |
 | M5 | Description optimization                                                                                                 | `trigger-eval.json` (20 queries) reviewed; `run_loop.py` completes; `best_description` applied        |
 | M6 | v1 release                                                                                                               | Plugin published to marketplace; README final; CHANGELOG entry; GitHub release tag `v0.1.0`           |
