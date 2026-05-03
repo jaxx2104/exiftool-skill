@@ -76,6 +76,9 @@ exiftool-skill/
 ├── .claude-plugin/
 │   ├── marketplace.json
 │   └── plugin.json
+├── .github/
+│   └── workflows/
+│       └── weekly-upstream-bump.yml
 ├── README.md
 ├── LICENSE                       # Perl Artistic / GPL dual (upstream-inherited)
 ├── CHANGELOG.md
@@ -157,8 +160,9 @@ exiftool-skill/
 
 ### 3.1 Distribution scope
 
-`tools/`, `vendor/`, `tests/`, `evals/`, `docs/`, and any `*-workspace/`
-sibling directories are **excluded** from the installed plugin payload.
+`tools/`, `vendor/`, `tests/`, `evals/`, `docs/`, `.github/`, and any
+`*-workspace/` sibling directories are **excluded** from the installed
+plugin payload.
 
 The primary mechanism is the `files` (or equivalent include) field of
 `.claude-plugin/plugin.json`, which authoritatively declares what ships with
@@ -372,7 +376,11 @@ Auto-generated index of every `upstream/` file, table form
 (`File | Source | Purpose`), used as the LLM's entry point when consulting
 the upstream layer.
 
-### 6.6 Regeneration workflow (human)
+### 6.6 Manual regeneration workflow (fallback)
+
+Used when developing locally, debugging the converter, or applying an
+unscheduled upstream bump. The automated workflow in §6.7 covers the
+recurring case.
 
 ```sh
 # 1) Bump upstream
@@ -391,6 +399,58 @@ git diff skills/exiftool/references/upstream/
 git add vendor/exiftool skills/exiftool/references/upstream/
 git commit -m "Bump upstream to 13.58, regenerate references"
 ```
+
+### 6.7 Automated regeneration via GitHub Actions
+
+`.github/workflows/weekly-upstream-bump.yml` runs on a weekly schedule and
+opens a pull request whenever upstream `exiftool/exiftool` publishes a new
+tagged release. The human's only responsibility is to review and merge (or
+close) the PR.
+
+**Trigger**:
+- `schedule: cron '0 6 * * 1'` (Mondays 06:00 UTC)
+- `workflow_dispatch` (manual fire for ad-hoc runs)
+
+**Steps**:
+
+1. `actions/checkout@v4` with `submodules: recursive`.
+2. `cd vendor/exiftool && git fetch --tags`. Determine the latest upstream
+   tag matching the version pattern (e.g., `13.*`).
+3. Compare the latest tag to the currently pinned tag. If equal, exit
+   successfully without producing a PR.
+4. If a `auto/upstream-<tag>` branch already exists on the remote, exit
+   successfully (a previous run already opened a PR for this tag — avoid
+   duplicates).
+5. `git checkout <new-tag>` inside the submodule; commit the submodule pin
+   bump in the parent repo.
+6. Set up Python (`actions/setup-python@v5`) and install
+   `markdownify` + `beautifulsoup4`.
+7. Run `./tools/regen-references.sh`.
+8. Run `./tools/check-links.sh`. If it fails, mark the PR as **draft** and
+   add a label `needs-attention` so the human knows to investigate before
+   merging.
+9. Create branch `auto/upstream-<tag>`, commit changes
+   (`Bump upstream to <tag>, regenerate references`), push.
+10. Open PR via `gh pr create` with:
+    - Title: `Bump upstream to <tag>`
+    - Body: link to upstream `Changes` entry for the new tag, summary of
+      generated-file diff stats (`N files changed, +X / -Y lines`).
+    - Labels: `auto-upstream` (always), `needs-attention` (if check-links
+      failed).
+    - Reviewer: `jaxx2104`.
+
+**Permissions**: workflow needs `contents: write` and `pull-requests: write`
+(declared in workflow `permissions:` block, not via repo settings).
+
+**Failure modes**:
+- Network failure fetching upstream: standard Action retry; if still failing,
+  the cron simply waits a week.
+- Conversion script error: workflow fails loudly; no PR opened. The
+  `needs-attention` label is reserved for link/integrity issues that still
+  produce reviewable output.
+
+**Cost**: weekly run, single Linux runner, expected duration < 2 minutes per
+run. Negligible Actions minutes consumption on a public repo.
 
 ---
 
@@ -647,7 +707,7 @@ which is unambiguous (avoiding the awkward `exiftool@exiftool`).
 |----|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
 | M1 | Scaffolding                                                                                                              | New repo, `.claude-plugin/`, directory tree, `vendor/exiftool` submodule pinned, SKILL.md skeleton, README, LICENSE, CHANGELOG |
 | M2 | Hand-written `tasks/` (8 files) + `safety.md`                                                                            | Each file matches common template; ≥3 patterns per file; ≥10 pitfalls in catalog; cross-links resolve |
-| M3 | Upstream auto-generation                                                                                                 | `regen-references.sh`, `select-upstream.yaml` covers 29 files (10 from `html/` + 19 from `html/TagNames/`), `html2md.py` operational, `INDEX.md` generated, output committed |
+| M3 | Upstream auto-generation                                                                                                 | `regen-references.sh`, `select-upstream.yaml` covers 29 files (10 from `html/` + 19 from `html/TagNames/`), `html2md.py` operational, `INDEX.md` generated, output committed; `.github/workflows/weekly-upstream-bump.yml` validated via `workflow_dispatch` (manual trigger produces a no-op run when already at latest, and a real PR when a synthetic older pin is used as a test) |
 | M4 | Evals iteration                                                                                                          | `evals/evals.json` with 8 cases; `iteration-1/` complete; eval-viewer reviewed; feedback applied; `iteration-2/` stable |
 | M5 | Description optimization                                                                                                 | `trigger-eval.json` (20 queries) reviewed; `run_loop.py` completes; `best_description` applied        |
 | M6 | v1 release                                                                                                               | Plugin published to marketplace; README final; CHANGELOG entry; GitHub release tag `v0.1.0`           |
