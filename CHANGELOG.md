@@ -7,18 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Initial repository scaffolding (`.claude-plugin/`, `LICENSE`,
-  `README.md`, `vendor/exiftool` submodule pinned to tag `13.57`).
-- Hand-written task references for 8 categories under
-  `skills/exiftool/references/tasks/`.
+### Added (Phase 1 — foundation)
+- Repository scaffolding: `.gitignore`, `.gitattributes`, `LICENSE`
+  (Artistic-1.0-Perl OR GPL-1.0-or-later), `README.md`,
+  `CHANGELOG.md`, `vendor/exiftool` submodule pinned to tag `13.57`.
+- Plugin manifests: `.claude-plugin/marketplace.json` (marketplace name
+  `jaxx2104`), `.claude-plugin/plugin.json` (version `0.1.0-dev` with
+  files whitelist).
+- Skill entry point `skills/exiftool/SKILL.md` with description,
+  reference map, and four embedded critical safety rules.
+- Hand-written task references (8 files at equal density) under
+  `skills/exiftool/references/tasks/`: `reading.md`, `gps.md`,
+  `datetime.md`, `copying.md`, `renaming.md`, `formats.md`, `video.md`,
+  `sanitize.md`.
 - `skills/exiftool/references/safety.md` with three-step rule,
-  `_original` decision table, and 10-entry pitfall catalog.
+  `_original` decision table, tag-family writability matrix, and
+  pitfall catalog P-001..P-010.
 - `skills/exiftool/references/tag-cheatsheet.md`.
-- Bundled bash helpers under `skills/exiftool/scripts/`:
-  `plan-batch.sh`, `strip-private.sh`, `dry-rename.sh`,
-  `extract-gpx.sh`.
-- `tests/lint.sh` verification harness.
+- Bundled helpers under `skills/exiftool/scripts/`: `plan-batch.sh`,
+  `strip-private.sh`, `dry-rename.sh`, `extract-gpx.sh`.
+- `tests/lint.sh` verification harness (JSON parse, frontmatter,
+  bash -n, shellcheck if available, markdown link integrity).
 
 ### Pending (later phases)
 - `references/upstream/` auto-generation (Phase 2).
