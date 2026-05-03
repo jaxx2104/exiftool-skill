@@ -1,0 +1,14 @@
+{
+  "name": "jaxx2104",
+  "owner": {
+    "name": "jaxx2104",
+    "url": "https://github.com/jaxx2104"
+  },
+  "plugins": [
+    {
+      "name": "exiftool",
+      "source": ".",
+      "description": "Comprehensive ExifTool skill: view, edit, strip, geotag, rename, and sanitize image/video/audio metadata via natural language."
+    }
+  ]
+}
