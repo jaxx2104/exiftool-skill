@@ -1,0 +1,11 @@
+# Supplementary to .claude-plugin/plugin.json `files` whitelist.
+# Only effective for git-archive based fetch paths.
+tools/                  export-ignore
+vendor/                 export-ignore
+tests/                  export-ignore
+evals/                  export-ignore
+docs/                   export-ignore
+.github/                export-ignore
+.gitattributes          export-ignore
+.gitmodules             export-ignore
+*-workspace/            export-ignore
