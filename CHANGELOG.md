@@ -43,7 +43,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tests/lint.sh` — Phase 1 `references/upstream/` exemption removed;
   link checker now ignores non-`.md` link targets.
 
+### Added (Phase 3 — evals iteration)
+- `evals/evals.json` — 8 realistic English prompts spanning the 8 task
+  categories (read GPS, batch GPS strip, datetime TZ shift, rename by
+  date, geotag from GPX, video GPS extraction, tag copy via
+  `-tagsFromFile`, CSV camera-info export).
+- `tests/fixtures/` — license-clear sample media copied from
+  `vendor/exiftool/t/images/` (inherits Artistic / GPL), a synthetic
+  CC0 minimal `track.gpx`, and a QuickTime stand-in for the missing
+  GoPro mp4. `tests/fixtures/README.md` records provenance and the
+  GoPro caveat.
+- Two iterations against the eval set (with-skill vs baseline executor
+  subagents, grader subagents, `aggregate_benchmark` summary). Iter-1
+  with-skill 23/24 (96%) vs baseline 21/24 (88%); iter-2 with-skill
+  reached 24/24 (100%) and plateau on the existing assertion set.
+
+### Changed (Phase 3 — skill content edits driven by eval feedback)
+- `references/tasks/datetime.md` — new pitfall: when the metadata that
+  would identify a target subset (`OffsetTimeOriginal`, GPS) is absent,
+  ASK the user instead of guessing heuristically. Driven by eval 3
+  iteration-1 with-skill silently picking a file by year.
+- `references/tasks/formats.md` — CSV pattern now states explicitly
+  that for a directory target `-r` should be included even on a flat
+  directory, rather than enumerating files by hand. Driven by eval 8
+  iteration-1 with-skill missing `-r`.
+
 ### Pending (later phases)
-- Evals iteration loop (Phase 3).
 - Description optimization (Phase 4).
 - Plugin marketplace registration & v0.1.0 GitHub release (Phase 5).

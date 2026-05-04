@@ -52,7 +52,10 @@ exiftool -csv -Make -Model -LensModel -DateTimeOriginal -r ./photos > out.csv
 ```
 **Why**: `-csv` produces RFC-4180-style CSV with a header row containing
 SourceFile + tag names. **Always restrict tags** when batching across
-many files to keep the column count manageable.
+many files to keep the column count manageable. **When the target is a
+directory, include `-r`** even for a flat directory — the cost is zero
+and it future-proofs against subdirs being added later. Enumerating
+files by hand instead of using `-r` is brittle and easy to miss.
 
 ### Pattern: Short forms for compact output
 **Input**: 「短く」 / "compact"

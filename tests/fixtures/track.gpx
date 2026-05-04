@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="exiftool-skill evals" xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>Eval test track</name>
+    <trkseg>
+      <trkpt lat="35.6812" lon="139.7671"><time>2010-01-01T00:00:00Z</time></trkpt>
+      <trkpt lat="35.6800" lon="139.7700"><time>2030-12-31T23:59:59Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

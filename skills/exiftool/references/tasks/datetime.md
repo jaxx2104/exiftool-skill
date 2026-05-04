@@ -95,6 +95,12 @@ first to display the count.
 
 ## Pitfalls
 
+- **No metadata to filter on → ASK, do not guess.** When the user says
+  "only the photos shot in TZ X" but the files lack `OffsetTimeOriginal`,
+  GPS, or any other tag that would identify the subset, do NOT pick
+  files heuristically (e.g. by year or by camera model). Surface the
+  ambiguity to the user and ask which files to target. The wrong shift
+  on the wrong files is silent corruption.
 - **`-AllDates` is not "every date".** Filesystem mtime, GPSDateTime,
   and QuickTime atoms are not included (P-004). Enumerate explicitly
   when needed.
