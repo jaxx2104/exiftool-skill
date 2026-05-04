@@ -74,13 +74,14 @@ discriminating value.
 `evals/trigger-eval.json` (new). 20 queries, English only.
 
 ### Schema (per skill-creator `run_loop.py`)
+
+`run_loop.py` calls `json.loads(...)` on the file and iterates the result directly, so the file must be a top-level JSON list (not wrapped in `{"queries": [...]}`).
+
 ```json
-{
-  "queries": [
-    {"query": "<text>", "should_trigger": true},
-    {"query": "<text>", "should_trigger": false}
-  ]
-}
+[
+  {"query": "<text>", "should_trigger": true},
+  {"query": "<text>", "should_trigger": false}
+]
 ```
 
 ### Sourcing

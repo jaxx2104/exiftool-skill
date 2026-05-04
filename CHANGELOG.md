@@ -77,6 +77,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pairs with `**Input**: "EN"`; translated remaining Japanese headings
   and prose to English.
 
+### Added (Phase 4 — description optimization)
+- `evals/trigger-eval.json` — 20-query English trigger eval set (10
+  should-trigger across the 8 task categories with realistic register
+  diversity, 10 should-not-trigger near-misses in image-resize /
+  video-transcode / OCR / pixel-edit territory).
+- Optimized `SKILL.md` `description:` via skill-creator's
+  `run_loop.py` (5 iterations, 40% held-out test split). Held-out test
+  pass rate 5/8 (62.5%) vs baseline 4/8 (50%); train pass rate 6/12
+  for both. The optimized description is more aggressive about
+  triggering on informal phrasings ("wipe gps", "before I post").
+
 ### Pending (later phases)
-- Description optimization (Phase 4).
 - Plugin marketplace registration & v0.1.0 GitHub release (Phase 5).
