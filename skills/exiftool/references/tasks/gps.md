@@ -5,10 +5,10 @@ in image and video files using exiftool.
 
 ## When this applies
 Read this file when the user says things like:
-- 「GPS 消して」「ジオタグ削除」/ "strip GPS", "remove location"
-- 「この写真どこで撮った？」/ "where was this taken"
-- 「GPX から座標つけて」/ "geotag from GPX"
-- 「この座標を入れて」/ "set GPS to lat,lon"
+- "strip GPS", "remove location"
+- "where was this taken"
+- "geotag from GPX"
+- "set GPS to lat,lon"
 
 ## Pre-flight checks
 1. **Writing or deleting?** Read `references/safety.md` first.
@@ -20,7 +20,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Show GPS coordinates
-**Input**: 「この写真の GPS 教えて」 / "where was photo.jpg taken"
+**Input**: "where was photo.jpg taken"
 **Command**:
 ```sh
 exiftool -GPSPosition -GPSAltitude photo.jpg
@@ -32,7 +32,7 @@ lat/lon/refs into a human-friendly string. For programmatic use, prefer
 the raw `EXIF:GPSLatitude` / `GPSLongitude`.
 
 ### Pattern: Strip GPS from one or many files
-**Input**: 「GPS 消して」 / "remove all location data before posting"
+**Input**: "remove all location data before posting"
 **Command (single file, dry-run first recommended)**:
 ```sh
 # Confirm what will be removed:
@@ -52,7 +52,7 @@ which is what users typically mean by "remove GPS". Setting individual tags
 can leave residue (e.g., `GPSAltitude` lingering).
 
 ### Pattern: Set GPS coordinates manually
-**Input**: 「この写真に東京駅の座標入れて」 / "geotag photo.jpg to 35.6812, 139.7671"
+**Input**: "geotag photo.jpg to 35.6812, 139.7671"
 **Command**:
 ```sh
 exiftool \
@@ -65,7 +65,7 @@ Forgetting `Ref` results in coordinates being interpreted as the wrong
 hemisphere — a common silent failure. (Pitfall P-002.)
 
 ### Pattern: Geotag from a GPX track
-**Input**: 「track.gpx に合わせて全部 geotag して」
+**Input**: "geotag all photos to track.gpx"
 **Command**:
 ```sh
 exiftool -geotag track.gpx -r ./photos

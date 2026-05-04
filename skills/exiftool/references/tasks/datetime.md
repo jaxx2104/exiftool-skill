@@ -5,10 +5,10 @@ restoring dates from filenames, and timezone correction.
 
 ## When this applies
 Read this file when the user says things like:
-- 「撮影日時直して」「全部 2 時間ずらして」 / "shift all dates by +2h"
-- 「カメラの時計が UTC のままだった」 / "camera clock was on UTC"
-- 「ファイル名から DateTimeOriginal を入れて」 / "set capture date from filename"
-- 「TZ オフセット入ってない」 / "no offset time stored"
+- "shift all dates by +2h"
+- "camera clock was on UTC"
+- "set capture date from filename"
+- "no offset time stored"
 
 ## Pre-flight checks
 1. Date writes are destructive. Read `references/safety.md`.
@@ -21,7 +21,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Show capture dates
-**Input**: 「この写真いつ撮った？」 / "when was this taken"
+**Input**: "when was this taken"
 **Command**:
 ```sh
 exiftool -DateTimeOriginal -CreateDate -OffsetTimeOriginal photo.jpg
@@ -33,7 +33,7 @@ exiftool -DateTimeOriginal -r ./photos
 context (many older cameras do not).
 
 ### Pattern: Shift all dates by an offset
-**Input**: 「全部 2 時間進めて」 / "add 2 hours to all dates"
+**Input**: "add 2 hours to all dates"
 **Command**:
 ```sh
 # Single file:
@@ -52,8 +52,7 @@ exiftool -AllDates+="0:0:1 0:0:0" photo.jpg    # +1 day
 `GPSDateTime`, or `QuickTime:CreateDate` (P-004).
 
 ### Pattern: Restore date from filename
-**Input**: 「ファイル名 IMG_20240315_103022.jpg から撮影日入れて」 /
-"recover DateTimeOriginal from filename"
+**Input**: "recover DateTimeOriginal from filename"
 **Command**:
 ```sh
 exiftool '-DateTimeOriginal<filename' photo.jpg
@@ -65,8 +64,7 @@ common date patterns inside `$filename`. For unusual patterns, use a
 custom format string per the upstream filename docs (Phase 2).
 
 ### Pattern: Apply or fix timezone offset
-**Input**: 「写真は日本で撮ったのに TZ が UTC になってる」 /
-"set OffsetTimeOriginal to +09:00"
+**Input**: "set OffsetTimeOriginal to +09:00"
 **Command**:
 ```sh
 # Set the offset annotation (does NOT shift dates):
@@ -82,7 +80,7 @@ re-interpret existing wall-clock dates; they label them. For video,
 `QuickTime:CreateDate` is UTC by spec (P-005) — handle separately.
 
 ### Pattern: Conditional shift (only files matching a criterion)
-**Input**: 「Apple iPhone のやつだけ +9h して」
+**Input**: "shift only Apple iPhone files by +9h"
 **Command**:
 ```sh
 exiftool -if '$Make eq "Apple"' \

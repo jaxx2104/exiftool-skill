@@ -6,10 +6,10 @@ SRT files, and the QuickTime UTC convention.
 
 ## When this applies
 Read this file when the user says things like:
-- 「GoPro の GPS を GPX で出して」 / "extract GoPro GPS as GPX"
-- 「動画の撮影日変えたい」 / "fix video capture date"
-- 「DJI の SRT に GPS 入ってる」 / "DJI flight log"
-- 「mov の Exif 見せて」 / "show video metadata"
+- "extract GoPro GPS as GPX"
+- "fix video capture date"
+- "DJI flight log"
+- "show video metadata"
 
 ## Pre-flight checks
 1. Read-only operations: no safety gate.
@@ -21,7 +21,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Show video metadata
-**Input**: 「video.mp4 のメタデータ見せて」 / "what's in video.mp4"
+**Input**: "what's in video.mp4"
 **Command**:
 ```sh
 exiftool video.mp4
@@ -37,7 +37,7 @@ will include `QuickTime`, `Track1`, `Audio`, `Video`, etc.
 (UTC).
 
 ### Pattern: Shift video capture date
-**Input**: 「動画の日時 9 時間ずらして」 / "shift video dates by +9h"
+**Input**: "shift video dates by +9h"
 **Command**:
 ```sh
 # QuickTime fields (UTC):
@@ -56,7 +56,7 @@ QuickTime values as UTC (P-005) — confirm with the user whether they
 want the wall-clock or the UTC value shifted.
 
 ### Pattern: Extract embedded GoPro GPS as GPX
-**Input**: 「GoPro の GPS を GPX で出して」 / "extract GoPro GPS as GPX"
+**Input**: "extract GoPro GPS as GPX"
 **Command**:
 ```sh
 exiftool -ee -p ${HOME}/.config/exiftool/fmt/gpx.fmt gopro.mp4 > track.gpx
@@ -72,7 +72,7 @@ formats them into a valid GPX 1.1 document.
 The `scripts/extract-gpx.sh` helper wraps this pattern.
 
 ### Pattern: Read DJI SRT sidecar GPS
-**Input**: 「DJI の SRT 読んで GPS 出して」 / "DJI flight log GPS"
+**Input**: "DJI flight log GPS"
 **Command**:
 ```sh
 exiftool drone.SRT
@@ -85,7 +85,7 @@ SRT files natively and exposes the per-frame GPS fields as standard
 GPS tags.
 
 ### Pattern: Set GPS on a whole video clip
-**Input**: 「動画にこの座標入れて」 / "geotag this video"
+**Input**: "geotag this video"
 **Command**:
 ```sh
 exiftool \
@@ -103,7 +103,7 @@ EXIF-style tags are recognized by some players but not all; test with
 the consumer app.
 
 ### Pattern: Strip metadata from a video before sharing
-**Input**: 「動画から個人情報全部消して」 / "sanitize video"
+**Input**: "sanitize video"
 **Command**:
 ```sh
 exiftool -all= video.mp4

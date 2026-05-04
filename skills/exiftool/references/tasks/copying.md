@@ -6,10 +6,10 @@ application.
 
 ## When this applies
 Read this file when the user says things like:
-- 「a.jpg のメタデータを b.jpg にコピー」 / "copy exif from a to b"
-- 「現像した tiff に元 raw の Exif つけたい」 / "preserve raw exif in the converted tiff"
-- 「XMP サイドカーから一括適用」 / "apply XMP sidecars to images"
-- 「画像の exif を XMP として書き出して」 / "extract exif as sidecar"
+- "copy exif from a to b"
+- "preserve raw exif in the converted tiff"
+- "apply XMP sidecars to images"
+- "extract exif as sidecar"
 
 ## Pre-flight checks
 1. Tag copies are writes. Read `references/safety.md`.
@@ -21,7 +21,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Copy all metadata between two files
-**Input**: 「a.jpg のメタデータを b.jpg にコピー」 / "copy a.jpg metadata to b.jpg"
+**Input**: "copy a.jpg metadata to b.jpg"
 **Command**:
 ```sh
 exiftool -tagsFromFile a.jpg b.jpg
@@ -32,7 +32,7 @@ afterwards. The destination file is modified in place; an `_original`
 backup is created.
 
 ### Pattern: Copy a subset (e.g., only GPS or only EXIF)
-**Input**: 「GPS だけコピー」 / "copy only GPS from a.jpg to b.jpg"
+**Input**: "copy only GPS from a.jpg to b.jpg"
 **Command**:
 ```sh
 exiftool -tagsFromFile a.jpg -gps:all b.jpg
@@ -45,7 +45,7 @@ exiftool -tagsFromFile a.jpg -EXIF:all b.jpg
 group:all for a clean sweep of one family.
 
 ### Pattern: Apply sidecar XMP to an image
-**Input**: 「photo.xmp の内容を photo.jpg に適用」 / "apply photo.xmp to photo.jpg"
+**Input**: "apply photo.xmp to photo.jpg"
 **Command**:
 ```sh
 exiftool -tagsFromFile photo.xmp -all:all photo.jpg
@@ -55,7 +55,7 @@ tag the sidecar contains into the image. For only structured XMP fields:
 `-XMP:all` instead of `-all:all`.
 
 ### Pattern: Bulk sidecar application across a directory
-**Input**: 「photos/ の各 .jpg に同名 .xmp を当てて」 / "apply each XMP sidecar to its image"
+**Input**: "apply each XMP sidecar to its image"
 **Command**:
 ```sh
 exiftool -tagsFromFile %d%f.xmp -all:all -ext jpg ./photos
@@ -65,8 +65,7 @@ for `./photos/IMG_001.jpg`, exiftool reads `./photos/IMG_001.xmp`. Add
 `-r` for recursion.
 
 ### Pattern: Extract image metadata as a sidecar
-**Input**: 「photo.jpg の exif を photo.xmp として書き出して」 /
-"export photo.jpg metadata as XMP sidecar"
+**Input**: "export photo.jpg metadata as XMP sidecar"
 **Command**:
 ```sh
 exiftool -o photo.xmp photo.jpg
@@ -78,7 +77,7 @@ source. When the output ends in `.xmp`, exiftool produces a valid
 XMP sidecar containing the source's metadata.
 
 ### Pattern: Copy from a different tag (rename a tag)
-**Input**: 「IPTC:Caption-Abstract を XMP-dc:Description にコピー」
+**Input**: "copy IPTC:Caption-Abstract to XMP-dc:Description"
 **Command**:
 ```sh
 exiftool '-XMP-dc:Description<IPTC:Caption-Abstract' photo.jpg

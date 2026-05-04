@@ -6,10 +6,10 @@ safety gate required.
 
 ## When this applies
 Read this file when the user says things like:
-- 「この写真の Exif 見せて」「メタデータ全部出して」 / "show all exif"
-- 「GPS だけ抽出して」 / "just the GPS"
-- 「Make / Model だけ」 / "what camera shot this"
-- 「ディレクトリ全体の DateTimeOriginal を一覧」 / "list capture dates"
+- "show all exif"
+- "just the GPS"
+- "what camera shot this"
+- "list capture dates"
 
 ## Pre-flight checks
 1. Reading is read-only; no backup or confirmation needed.
@@ -20,7 +20,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Show all metadata for one file
-**Input**: 「このファイルのメタデータ全部見せて」 / "what's in photo.jpg"
+**Input**: "what's in photo.jpg"
 **Command**:
 ```sh
 exiftool photo.jpg
@@ -34,7 +34,7 @@ exiftool -G photo.jpg
 ```
 
 ### Pattern: Show specific tags only
-**Input**: 「GPS と DateTimeOriginal だけ」 / "just GPS and capture date"
+**Input**: "just GPS and capture date"
 **Command**:
 ```sh
 exiftool -GPSPosition -DateTimeOriginal photo.jpg
@@ -47,7 +47,7 @@ exiftool -GPSLatitude -GPSLongitude -DateTimeOriginal photo.jpg
 ```
 
 ### Pattern: Show all tags in a group
-**Input**: 「EXIF だけ全部」 / "all EXIF tags"
+**Input**: "all EXIF tags"
 **Command**:
 ```sh
 exiftool -EXIF:all photo.jpg
@@ -60,7 +60,7 @@ exiftool -Composite:all photo.jpg
 confirming what would be touched by a `<Group>:all=` deletion.
 
 ### Pattern: Short forms for compact output
-**Input**: 「短く」 / "compact output"
+**Input**: "compact output"
 **Command**:
 ```sh
 exiftool -s photo.jpg     # tag names instead of descriptions
@@ -73,7 +73,7 @@ DATE=$(exiftool -s3 -DateTimeOriginal photo.jpg)
 ```
 
 ### Pattern: Batch read across a directory
-**Input**: 「フォルダ全部の撮影日を一覧」 / "list all capture dates in DIR"
+**Input**: "list all capture dates in DIR"
 **Command**:
 ```sh
 exiftool -r -ext jpg -ext heic -DateTimeOriginal -FileName ./photos
@@ -86,7 +86,7 @@ exiftool -if '$DateTimeOriginal' -p '$FileName' -r ./photos | wc -l
 ```
 
 ### Pattern: Conditional filtering with `-if`
-**Input**: 「GPS が入ってるやつだけ」 / "only files that have GPS"
+**Input**: "only files that have GPS"
 **Command**:
 ```sh
 exiftool -if '$gpslatitude' -p '$FileName' -r ./photos
@@ -96,7 +96,7 @@ values. `$gpslatitude` is truthy when present. Combine for stricter
 filters: `-if '$gpslatitude and $make eq "Apple"'`.
 
 ### Pattern: Export as JSON for downstream parsing
-**Input**: 「JSON で取って後で処理したい」 / "give me JSON"
+**Input**: "give me JSON"
 **Command**:
 ```sh
 exiftool -j -G photo.jpg

@@ -6,10 +6,10 @@ files before public posting.
 
 ## When this applies
 Read this file when the user says things like:
-- 「SNS にあげる前に個人情報消して」 / "strip metadata before posting"
-- 「シリアル番号と GPS 削って」 / "remove serial and GPS"
-- 「全 metadata 消して」 / "wipe everything"
-- 「カメラの所有者情報残ってない？」 / "is my owner name in there"
+- "strip metadata before posting"
+- "remove serial and GPS"
+- "wipe everything"
+- "is my owner name in there"
 
 ## Pre-flight checks
 1. **All sanitization is destructive.** Read `references/safety.md`.
@@ -21,7 +21,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Strip everything
-**Input**: 「全部消して」 / "remove all metadata"
+**Input**: "remove all metadata"
 **Command**:
 ```sh
 # Single file:
@@ -34,7 +34,7 @@ tags exiftool cannot remove (file format intrinsics) remain — those are
 not personally identifying.
 
 ### Pattern: SNS-publish preset
-**Input**: 「SNS 用に sanitize」 / "ready this for instagram"
+**Input**: "ready this for instagram"
 **Command**:
 ```sh
 exiftool \
@@ -58,7 +58,7 @@ date, exposure settings). The `scripts/strip-private.sh` helper wraps
 this exact list and accepts a file or directory.
 
 ### Pattern: Remove only one group
-**Input**: 「EXIF だけ消して XMP は残す」 / "strip EXIF but keep XMP"
+**Input**: "strip EXIF but keep XMP"
 **Command**:
 ```sh
 exiftool -EXIF:all= photo.jpg
@@ -70,7 +70,7 @@ the user wants to keep edits stored in XMP (e.g., Lightroom catalog
 metadata) but blank out hardware-identifying EXIF.
 
 ### Pattern: Strip and clean up _original backups
-**Input**: 「全部消して、バックアップも要らない」 / "no backups please"
+**Input**: "no backups please"
 **Command**:
 ```sh
 # After confirmation that the user accepts irreversibility:
@@ -85,7 +85,7 @@ find ./photos -name '*_original' -delete
 ```
 
 ### Pattern: Verify sanitization succeeded
-**Input**: 「ちゃんと消えてるか確認」 / "verify what's left"
+**Input**: "verify what's left"
 **Command**:
 ```sh
 exiftool -G photo.jpg
@@ -96,7 +96,7 @@ exiftool -G -gps:all -SerialNumber -OwnerName -Software photo.jpg
 empty for the queried tags, the sanitization succeeded.
 
 ### Pattern: PNG-specific (note tEXt chunks)
-**Input**: 「PNG の sanitize」 / "sanitize PNG"
+**Input**: "sanitize PNG"
 **Command**:
 ```sh
 exiftool -all= image.png

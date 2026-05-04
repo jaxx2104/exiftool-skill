@@ -68,6 +68,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   directory, rather than enumerating files by hand. Driven by eval 8
   iteration-1 with-skill missing `-r`.
 
+### Changed (Phase 4 — English-only sweep)
+- `SKILL.md` frontmatter `description:` and body reference map: removed
+  Japanese trigger phrases and labels; the public skill is uniformly in
+  English. Japanese-prompt users still trigger the skill via semantic
+  matching.
+- `references/tasks/*.md` (8 files): replaced `**Input**: 「JP」 / "EN"`
+  pairs with `**Input**: "EN"`; translated remaining Japanese headings
+  and prose to English.
+
 ### Pending (later phases)
 - Description optimization (Phase 4).
 - Plugin marketplace registration & v0.1.0 GitHub release (Phase 5).

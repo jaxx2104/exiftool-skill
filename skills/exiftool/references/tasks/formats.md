@@ -5,10 +5,10 @@ csvkit, spreadsheets, scripts).
 
 ## When this applies
 Read this file when the user says things like:
-- 「JSON で出して」 / "give me JSON"
-- 「CSV にして spreadsheet で開きたい」 / "csv for excel/numbers"
-- 「Make / Model / LensModel の表」 / "table of camera info"
-- 「pipe して jq で処理」 / "pipe to jq"
+- "give me JSON"
+- "csv for excel/numbers"
+- "table of camera info"
+- "pipe to jq"
 
 ## Pre-flight checks
 1. Output formatting is read-only.
@@ -18,7 +18,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: JSON output
-**Input**: 「JSON で出して」 / "json please"
+**Input**: "json please"
 **Command**:
 ```sh
 exiftool -j photo.jpg                              # one file → JSON array of one
@@ -31,7 +31,7 @@ exiftool -j -G -r ./photos                         # batch
 across files where same-named tags from different groups would collide.
 
 ### Pattern: JSON with raw numeric values
-**Input**: 「ISO とか数値で取りたい」 / "I need ISO as a number for sorting"
+**Input**: "I need ISO as a number for sorting"
 **Command**:
 ```sh
 exiftool -j -n -ISO -FNumber -ExposureTime photo.jpg
@@ -43,7 +43,7 @@ processors. Example: without `-n`, `ISO` may be `100` (string);
 `0.005` (numeric).
 
 ### Pattern: CSV output
-**Input**: 「CSV で」 / "csv please"
+**Input**: "csv please"
 **Command**:
 ```sh
 exiftool -csv photo.jpg                            # single file
@@ -58,7 +58,7 @@ and it future-proofs against subdirs being added later. Enumerating
 files by hand instead of using `-r` is brittle and easy to miss.
 
 ### Pattern: Short forms for compact output
-**Input**: 「短く」 / "compact"
+**Input**: "compact"
 **Command**:
 ```sh
 exiftool -s photo.jpg     # tag names instead of long descriptions
@@ -72,7 +72,7 @@ LAT=$(exiftool -s3 -GPSLatitude photo.jpg)
 ```
 
 ### Pattern: Structured XMP / nested tags
-**Input**: 「XMP の構造そのまま JSON で」 / "preserve XMP structure"
+**Input**: "preserve XMP structure"
 **Command**:
 ```sh
 exiftool -j -struct -XMP:all photo.jpg
@@ -82,7 +82,7 @@ exiftool -j -struct -XMP:all photo.jpg
 indices.
 
 ### Pattern: Pipeline to jq for filtering
-**Input**: 「Apple の写真だけ撮影日と GPS を JSON で」
+**Input**: "give me capture date and GPS as JSON for Apple photos only"
 **Command**:
 ```sh
 exiftool -j -G -if '$Make eq "Apple"' \
@@ -94,7 +94,7 @@ and `jq` for projection produces a clean pipeline. Note quoting:
 the EXIF group prefix in jq must use `."EXIF:DateTimeOriginal"`.
 
 ### Pattern: Custom format string
-**Input**: 「自分で format 指定」 / "custom output format"
+**Input**: "custom output format"
 **Command**:
 ```sh
 exiftool -p '$FileName  $DateTimeOriginal  $GPSPosition' -r ./photos
