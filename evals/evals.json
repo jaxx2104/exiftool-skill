@@ -40,7 +40,7 @@
       "id": 6,
       "name": "video-gps-track",
       "prompt": "GoPro で撮った tests/fixtures/gopro.mp4 から GPS トラックを GPX で出して",
-      "expected_output": "-ee の使用、または .fmt の言及",
+      "expected_output": "-ee の使用または .fmt の言及。GPS ストリームが無い場合はその旨を報告。",
       "files": ["tests/fixtures/gopro.mp4"]
     },
     {
