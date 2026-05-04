@@ -372,23 +372,20 @@ git checkout -b phase-4-description-opt origin/main
 
 - [ ] **Step 2: Write the eval set**
 
-`evals/trigger-eval.json` schema:
+`evals/trigger-eval.json` schema (top-level JSON list — `run_loop.py` iterates the loaded value directly):
 
 ```json
-{
-  "queries": [
-    {"query": "<text>", "should_trigger": true},
-    ...
-  ]
-}
+[
+  {"query": "<text>", "should_trigger": true},
+  ...
+]
 ```
 
 Write the file with these 20 queries:
 
 ```json
-{
-  "queries": [
-    {"query": "this heic from yesterday's hike, can you wipe the gps before i text it to my mom", "should_trigger": true},
+[
+  {"query": "this heic from yesterday's hike, can you wipe the gps before i text it to my mom", "should_trigger": true},
     {"query": "I want to organize my photos into year/month/day folders by capture date", "should_trigger": true},
     {"query": "drone footage from last weekend — extract the gps log as gpx so I can plot it", "should_trigger": true},
     {"query": "I have a CSV of camera serial numbers and need to find which jpg in the album was shot by which body", "should_trigger": true},
@@ -409,8 +406,7 @@ Write the file with these 20 queries:
     {"query": "I want to ocr the text in this scanned pdf", "should_trigger": false},
     {"query": "find duplicate photos in this directory", "should_trigger": false},
     {"query": "make a contact sheet of these photos", "should_trigger": false}
-  ]
-}
+]
 ```
 
 Notes:

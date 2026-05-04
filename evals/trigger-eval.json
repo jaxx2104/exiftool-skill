@@ -1,0 +1,23 @@
+[
+  {"query": "this heic from yesterday's hike, can you wipe the gps before i text it to my mom", "should_trigger": true},
+  {"query": "I want to organize my photos into year/month/day folders by capture date", "should_trigger": true},
+  {"query": "drone footage from last weekend — extract the gps log as gpx so I can plot it", "should_trigger": true},
+  {"query": "I have a CSV of camera serial numbers and need to find which jpg in the album was shot by which body", "should_trigger": true},
+  {"query": "before I post these to instagram could you strip the metadata", "should_trigger": true},
+  {"query": "took these in tokyo with the camera clock still on PST, can you bump DateTimeOriginal +17h on everything in ./trip-photos/", "should_trigger": true},
+  {"query": "got a gpx from my watch, can you geotag the photos under ./trip-photos/ using it (geosync if needed, my camera was 30 sec ahead)", "should_trigger": true},
+  {"query": "I converted these CR3s to TIFF in lightroom but the exif got stripped — can you copy the exif from each cr3 to the matching tiff next to it", "should_trigger": true},
+  {"query": "give me a csv of every jpg under ./library/ with Make, Model, LensModel, FocalLength, ISO so I can pivot in numbers", "should_trigger": true},
+  {"query": "extract the embedded gps log from this gopro mp4 as a .gpx so I can drop it into google earth", "should_trigger": true},
+
+  {"query": "resize all my photos in ./album to 1920px wide", "should_trigger": false},
+  {"query": "convert this mov to mp4 with h.265", "should_trigger": false},
+  {"query": "my image looks too dark, can you brighten it", "should_trigger": false},
+  {"query": "extract the audio from this video as a wav", "should_trigger": false},
+  {"query": "compress these jpgs to under 500kb each", "should_trigger": false},
+  {"query": "remove the watermark from this image", "should_trigger": false},
+  {"query": "rotate this photo 90 degrees", "should_trigger": false},
+  {"query": "I want to ocr the text in this scanned pdf", "should_trigger": false},
+  {"query": "find duplicate photos in this directory", "should_trigger": false},
+  {"query": "make a contact sheet of these photos", "should_trigger": false}
+]
