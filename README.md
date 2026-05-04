@@ -3,9 +3,6 @@
 A comprehensive Claude Code skill for image, video, and audio metadata
 operations via [exiftool](https://exiftool.org/) (Phil Harvey).
 
-> Status: pre-release (v0.1.0 in progress). Plugin marketplace registration
-> happens in Phase 5.
-
 ## What it does
 
 Translates natural-language requests into safe `exiftool` invocations across
@@ -32,13 +29,29 @@ Verify with: `exiftool -ver`
 
 ## Install
 
-(Available in Phase 5 — Plugin marketplace registration pending.)
+Three install paths, in order of recommendation.
 
-Once registered, install via Claude Code:
+### 1. Claude Code marketplace (recommended)
 
 ```
 /plugin marketplace add jaxx2104/exiftool-skill
 /plugin install exiftool@jaxx2104
+```
+
+### 2. `.skill` package
+
+Build a `.skill` archive with skill-creator's `package_skill` script, then install it:
+
+```
+python -m scripts.package_skill skills/exiftool   # run from inside skill-creator
+# Drop the resulting .skill file via Claude Code's plugin loader.
+```
+
+### 3. Manual clone
+
+```
+git clone https://github.com/jaxx2104/exiftool-skill.git
+ln -s "$PWD/exiftool-skill/skills/exiftool" ~/.claude/skills/exiftool
 ```
 
 ## Safety model
