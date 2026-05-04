@@ -29,9 +29,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tests/lint.sh` verification harness (JSON parse, frontmatter,
   bash -n, shellcheck if available, markdown link integrity).
 
+### Added (Phase 2 — upstream auto-generation)
+- `tools/select-upstream.yaml` allowlist (29 files: 10 html/ + 19 TagNames/).
+- `tools/html2md.py` HTML → Markdown converter (markdownify + bs4) with
+  link rewriting that points non-allowlisted references to upstream URLs.
+- `tools/regen-references.sh` driver and `tools/check-links.sh`
+  standalone link integrity checker.
+- `tools/requirements.txt` Python deps.
+- Generated `skills/exiftool/references/upstream/` content: 10 root
+  pages, 19 TagNames pages, plus auto-generated `INDEX.md`.
+- `.github/workflows/weekly-upstream-bump.yml` — weekly cron + manual
+  dispatch, opens auto-PR on new upstream tag.
+- `tests/lint.sh` — Phase 1 `references/upstream/` exemption removed;
+  link checker now ignores non-`.md` link targets.
+
 ### Pending (later phases)
-- `references/upstream/` auto-generation (Phase 2).
-- `.github/workflows/weekly-upstream-bump.yml` (Phase 2).
 - Evals iteration loop (Phase 3).
 - Description optimization (Phase 4).
 - Plugin marketplace registration & v0.1.0 GitHub release (Phase 5).

@@ -1,0 +1,121 @@
+name: Weekly upstream bump
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Mondays 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with submodules)
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python deps
+        run: |
+          pip install -r tools/requirements.txt
+
+      - name: Determine current and latest upstream tag
+        id: tags
+        run: |
+          set -euo pipefail
+          cd vendor/exiftool
+          git fetch --tags --quiet
+          CURRENT=$(git describe --tags --exact-match 2>/dev/null || git describe --tags)
+          LATEST=$(git tag -l '13.*' | sort -V | tail -1)
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
+          if [[ "$CURRENT" == "$LATEST" ]]; then
+            echo "already at latest ($CURRENT) — no work to do"
+            echo "needs_bump=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=$CURRENT, latest=$LATEST"
+            echo "needs_bump=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip duplicate auto-PR
+        if: steps.tags.outputs.needs_bump == 'true'
+        id: dup
+        run: |
+          set -euo pipefail
+          BRANCH="auto/upstream-${{ steps.tags.outputs.latest }}"
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+            echo "branch $BRANCH already exists on remote — skipping"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bump submodule and regenerate
+        if: steps.tags.outputs.needs_bump == 'true' && steps.dup.outputs.skip == 'false'
+        run: |
+          set -euo pipefail
+          cd vendor/exiftool
+          git checkout "${{ steps.tags.outputs.latest }}"
+          cd ../..
+          ./tools/regen-references.sh
+
+      - name: Verify links
+        if: steps.tags.outputs.needs_bump == 'true' && steps.dup.outputs.skip == 'false'
+        id: links
+        run: |
+          set -euo pipefail
+          if ./tools/check-links.sh; then
+            echo "links_ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "links_ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.tags.outputs.needs_bump == 'true' && steps.dup.outputs.skip == 'false'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "${{ steps.dup.outputs.branch }}"
+          git add vendor/exiftool skills/exiftool/references/upstream/
+          git commit -m "Bump upstream to ${{ steps.tags.outputs.latest }}, regenerate references"
+          git push -u origin "${{ steps.dup.outputs.branch }}"
+
+      - name: Open pull request
+        if: steps.tags.outputs.needs_bump == 'true' && steps.dup.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          BODY="Auto-generated PR from weekly-upstream-bump workflow."
+          BODY+=$'\n\n'"Bumps \`vendor/exiftool\` from \`${{ steps.tags.outputs.current }}\` to \`${{ steps.tags.outputs.latest }}\` and regenerates \`skills/exiftool/references/upstream/\`."
+          BODY+=$'\n\n'"Upstream changelog: https://github.com/exiftool/exiftool/blob/${{ steps.tags.outputs.latest }}/Changes"
+          LABELS=("auto-upstream")
+          if [[ "${{ steps.links.outputs.links_ok }}" != "true" ]]; then
+            LABELS+=("needs-attention")
+            DRAFT="--draft"
+            BODY+=$'\n\n'"⚠️ \`tools/check-links.sh\` reported broken links — see workflow logs."
+          else
+            DRAFT=""
+          fi
+          LABEL_ARGS=()
+          for l in "${LABELS[@]}"; do
+            LABEL_ARGS+=(--label "$l")
+          done
+          gh pr create $DRAFT \
+            --title "Bump upstream to ${{ steps.tags.outputs.latest }}" \
+            --body "$BODY" \
+            --base main \
+            --head "${{ steps.dup.outputs.branch }}" \
+            "${LABEL_ARGS[@]}" \
+            --reviewer jaxx2104 || true

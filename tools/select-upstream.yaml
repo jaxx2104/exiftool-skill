@@ -1,0 +1,80 @@
+# Allowlist of upstream exiftool HTML files to convert into
+# skills/exiftool/references/upstream/. tools/regen-references.sh reads
+# this and tools/html2md.py converts each entry. Add entries to expand
+# the corpus in future phases.
+
+html_root:
+  - source: html/examples.html
+    output: examples.md
+  - source: html/faq.html
+    output: faq.md
+  - source: html/geotag.html
+    output: geotag.md
+  - source: html/filename.html
+    output: filename.md
+  - source: html/metafiles.html
+    output: metafiles.md
+  - source: html/geolocation.html
+    output: geolocation.md
+  - source: html/exiftool_pod.html
+    output: cli-options.md
+    options:
+      toc: true
+  - source: html/mistakes.html
+    output: common-mistakes.md
+  - source: html/idiosyncracies.html
+    output: idiosyncracies.md
+  - source: html/install.html
+    output: install.md
+
+tag_names:
+  - source: html/TagNames/EXIF.html
+    output: tag-names/exif.md
+    options:
+      toc: true
+  - source: html/TagNames/Composite.html
+    output: tag-names/composite.md
+  - source: html/TagNames/XMP.html
+    output: tag-names/xmp.md
+    options:
+      toc: true
+  - source: html/TagNames/IPTC.html
+    output: tag-names/iptc.md
+  - source: html/TagNames/GPS.html
+    output: tag-names/gps.md
+  - source: html/TagNames/QuickTime.html
+    output: tag-names/quicktime.md
+    options:
+      toc: true
+  - source: html/TagNames/JPEG.html
+    output: tag-names/jpeg.md
+  - source: html/TagNames/PNG.html
+    output: tag-names/png.md
+  - source: html/TagNames/Extra.html
+    output: tag-names/extra.md
+  - source: html/TagNames/Canon.html
+    output: tag-names/canon.md
+    options:
+      toc: true
+  - source: html/TagNames/Nikon.html
+    output: tag-names/nikon.md
+    options:
+      toc: true
+  - source: html/TagNames/Sony.html
+    output: tag-names/sony.md
+    options:
+      toc: true
+  - source: html/TagNames/FujiFilm.html
+    output: tag-names/fujifilm.md
+  - source: html/TagNames/Panasonic.html
+    output: tag-names/panasonic.md
+  - source: html/TagNames/Olympus.html
+    output: tag-names/olympus.md
+  - source: html/TagNames/Pentax.html
+    output: tag-names/pentax.md
+  - source: html/TagNames/Apple.html
+    output: tag-names/apple.md
+  - source: html/TagNames/DJI.html
+    output: tag-names/dji.md
+  - source: html/TagNames/GoPro.html
+    output: tag-names/gopro.md

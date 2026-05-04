@@ -110,19 +110,16 @@ while IFS= read -r -d '' md; do
             mailto:* )             continue ;;
             /* )                   continue ;;
         esac
+        # Only validate links to other Markdown files. Non-.md targets
+        # (PDFs, TXTs, images embedded in upstream pages) are accepted
+        # as-is.
+        case "$link_path" in
+            *.md )                 ;;
+            * )                    continue ;;
+        esac
         # Resolve relative to the directory of the markdown file.
         md_dir="$(dirname "$md")"
         target="$md_dir/$link_path"
-        # Phase 1: references/upstream/ is populated by Phase 2.
-        # Skip integrity check for paths inside it while it is empty
-        # (only .gitkeep present).
-        case "$target" in
-            *references/upstream/*)
-                if [[ -d skills/exiftool/references/upstream ]]; then
-                    continue
-                fi
-                ;;
-        esac
         if [[ ! -e "$target" ]]; then
             echo "  ✗ broken link in $md: $link_path → $target" >&2
             LINK_FAIL=1
