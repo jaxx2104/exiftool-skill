@@ -1,0 +1,16 @@
+{
+  "name": "exiftool",
+  "version": "0.1.0-dev",
+  "description": "Read/write EXIF, IPTC, XMP, GPS, MakerNote metadata via natural language.",
+  "author": "jaxx2104",
+  "license": "Artistic-1.0-Perl OR GPL-1.0-or-later",
+  "homepage": "https://github.com/jaxx2104/exiftool-skill",
+  "skills": ["./skills/exiftool"],
+  "files": [
+    ".claude-plugin/**",
+    "skills/exiftool/**",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

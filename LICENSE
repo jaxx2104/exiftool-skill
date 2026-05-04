@@ -1,0 +1,10 @@
+SPDX-License-Identifier: Artistic-1.0-Perl OR GPL-1.0-or-later
+
+exiftool-skill is licensed under the same terms as the upstream
+exiftool project: the Artistic License (Perl) or the GNU General
+Public License, at the recipient's option. Full license texts will
+be inlined before the v0.1.0 release.
+
+The contents of `references/upstream/` are mechanical derivations of
+documentation in https://github.com/exiftool/exiftool and inherit
+those terms automatically.

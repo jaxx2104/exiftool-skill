@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (used by tools/ in later phases)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build / packaging artifacts (Phase 5)
+*.skill
+dist/
+
+# Workspace siblings (skill-creator eval workspaces, kept outside the repo,
+# but sometimes accidentally created inside)
+*-workspace/
+
+# Temporary
+*.tmp
+*.log
