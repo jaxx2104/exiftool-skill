@@ -44,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   link checker now ignores non-`.md` link targets.
 
 ### Added (Phase 3 — evals iteration)
-- `evals/evals.json` — 8 realistic Japanese prompts spanning the 8 task
+- `evals/evals.json` — 8 realistic English prompts spanning the 8 task
   categories (read GPS, batch GPS strip, datetime TZ shift, rename by
   date, geotag from GPX, video GPS extraction, tag copy via
   `-tagsFromFile`, CSV camera-info export).

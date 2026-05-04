@@ -4,56 +4,56 @@
     {
       "id": 1,
       "name": "view-gps-single",
-      "prompt": "tests/fixtures/photo.jpg の GPS 座標教えて",
-      "expected_output": "lat/lon が答えに含まれる、書き込みは行わない",
+      "prompt": "What are the GPS coordinates of tests/fixtures/photo.jpg?",
+      "expected_output": "lat/lon present in the answer, no write performed",
       "files": ["tests/fixtures/photo.jpg"]
     },
     {
       "id": 2,
       "name": "strip-gps-batch",
-      "prompt": "tests/fixtures/share/ にある写真を SNS に上げる前に GPS 全部消して",
-      "expected_output": "件数を先に提示、確認後にバッチ削除、_original の扱いを明示",
+      "prompt": "Strip GPS from all photos in tests/fixtures/share/ before I post them to social media",
+      "expected_output": "report file count first, batch-delete after confirmation, document _original handling",
       "files": ["tests/fixtures/share/"]
     },
     {
       "id": 3,
       "name": "shift-datetime-tz",
-      "prompt": "旅行で撮った写真、カメラの時計が日本時間のままで撮った分があるんだけど、UTC+0 の場所で撮影したやつだけ 9 時間戻して。対象は tests/fixtures/trip/ 以下。",
-      "expected_output": "対象絞り込みを -if で行う、AllDates または DateTimeOriginal の更新",
+      "prompt": "Some travel photos in tests/fixtures/trip/ were shot with the camera clock still on Japan time. For the ones taken in a UTC+0 location, roll the timestamp back by 9 hours.",
+      "expected_output": "use -if to filter the target subset, update AllDates or DateTimeOriginal",
       "files": ["tests/fixtures/trip/"]
     },
     {
       "id": 4,
       "name": "rename-by-date",
-      "prompt": "tests/fixtures/downloads/ の写真を撮影日で YYYY/MM/DD/ のフォルダに分けてリネームして",
-      "expected_output": "-Directory<DateTimeOriginal -d, dry-run 提案",
+      "prompt": "Rename the photos in tests/fixtures/downloads/ into YYYY/MM/DD/ folders by capture date",
+      "expected_output": "-Directory<DateTimeOriginal -d, suggest a dry-run",
       "files": ["tests/fixtures/downloads/"]
     },
     {
       "id": 5,
       "name": "geotag-from-gpx",
-      "prompt": "tests/fixtures/track.gpx に合わせて tests/fixtures/photos/ 全部 geotag して",
-      "expected_output": "-geotag 使用、時刻ズレ可能性に言及",
+      "prompt": "Geotag everything in tests/fixtures/photos/ against tests/fixtures/track.gpx",
+      "expected_output": "use -geotag, mention possible time-sync drift",
       "files": ["tests/fixtures/track.gpx", "tests/fixtures/photos/"]
     },
     {
       "id": 6,
       "name": "video-gps-track",
-      "prompt": "GoPro で撮った tests/fixtures/gopro.mp4 から GPS トラックを GPX で出して",
-      "expected_output": "以下のいずれか: (a) -ee または .fmt の言及, (b) GPS ストリームが無い旨の正直な報告",
+      "prompt": "Extract a GPX GPS track from tests/fixtures/gopro.mp4 (recorded on a GoPro)",
+      "expected_output": "Either: (a) mention of -ee or a .fmt template, (b) honest report that no GPS stream is present",
       "files": ["tests/fixtures/gopro.mp4"]
     },
     {
       "id": 7,
       "name": "copy-tags-sidecar",
-      "prompt": "現像した tests/fixtures/develop.tiff に、元 raw (tests/fixtures/source.cr3) の Exif 全部コピーしたい",
-      "expected_output": "-tagsFromFile の使用",
+      "prompt": "Copy all the Exif from the original raw (tests/fixtures/source.cr3) onto the developed tests/fixtures/develop.tiff",
+      "expected_output": "use -tagsFromFile",
       "files": ["tests/fixtures/develop.tiff", "tests/fixtures/source.cr3"]
     },
     {
       "id": 8,
       "name": "csv-export-camera-info",
-      "prompt": "tests/fixtures/photos/ 配下全部の Make / Model / LensModel を CSV で出して",
+      "prompt": "Export Make / Model / LensModel for everything under tests/fixtures/photos/ as CSV",
       "expected_output": "-csv -Make -Model -LensModel -r",
       "files": ["tests/fixtures/photos/"]
     }
