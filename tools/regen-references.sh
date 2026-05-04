@@ -61,6 +61,15 @@ UC = "$UPSTREAM_COMMIT"
 with open("$YAML") as f:
     data = yaml.safe_load(f)
 
+# Collect known output targets (relative to upstream/) so the
+# converter can rewrite links to non-allowlisted pages into
+# upstream URLs.
+known = set()
+for section_key in ("html_root", "tag_names"):
+    for entry in data.get(section_key, []):
+        known.add(entry["output"])
+known_arg = ",".join(sorted(known))
+
 for section_key in ("html_root", "tag_names"):
     for entry in data.get(section_key, []):
         src = VENDOR / entry["source"]
@@ -76,6 +85,7 @@ for section_key in ("html_root", "tag_names"):
             "--upstream-version", UV,
             "--upstream-commit", UC,
             "--upstream-source-rel", str(src.relative_to(ROOT)),
+            "--known-targets", known_arg,
         ]
         if opts.get("toc"):
             cmd.append("--toc")

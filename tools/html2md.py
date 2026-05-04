@@ -28,38 +28,80 @@ def strip_noise(soup: BeautifulSoup) -> None:
         a.decompose()
 
 
-def rewrite_intra_links(soup: BeautifulSoup, *, in_tag_names: bool) -> None:
+UPSTREAM_BASE = "https://exiftool.org"
+
+
+def rewrite_intra_links(
+    soup: BeautifulSoup,
+    *,
+    in_tag_names: bool,
+    known_targets: set[str],
+) -> None:
     """Rewrite href="EXIF.html" to relative skill-internal Markdown links.
 
     For pages under upstream/tag-names/ (in_tag_names=True), references
     to other TagNames pages stay sibling-relative (e.g. "exif.md").
     For pages under upstream/ root, references to TagNames/EXIF.html
     become "tag-names/exif.md".
+
+    Targets not present in `known_targets` (the allowlist's output paths
+    relative to upstream/) are rewritten to absolute upstream URLs at
+    https://exiftool.org/, so the link still works for the user even
+    though the page is not mirrored locally.
     """
+
+    def to_upstream_url(html_path: str, anchor: str) -> str:
+        # html_path is like "TagNames/Foo.html" or "Bar.html".
+        return f"{UPSTREAM_BASE}/{html_path}{anchor}"
+
     for a in soup.find_all("a", href=True):
         href = a["href"]
         # Anchor-only, mailto, external — leave alone.
         if href.startswith(("#", "mailto:", "http://", "https://")):
             continue
+
         # TagNames/<Name>.html (cross-section reference)
         m = re.match(r"^TagNames/([A-Za-z0-9_]+)\.html(#.*)?$", href)
         if m:
-            target = f"tag-names/{m.group(1).lower()}.md"
-            if in_tag_names:
-                target = f"{m.group(1).lower()}.md"
-            a["href"] = target + (m.group(2) or "")
+            name_lc = m.group(1).lower()
+            anchor = m.group(2) or ""
+            local_target = f"tag-names/{name_lc}.md"
+            if local_target in known_targets:
+                rel = local_target if not in_tag_names else f"{name_lc}.md"
+                a["href"] = rel + anchor
+            else:
+                a["href"] = to_upstream_url(f"TagNames/{m.group(1)}.html", anchor)
             continue
+
         # ../html/<page>.html or ../<page>.html — flatten to upstream/<page>.md
         m = re.match(r"^\.\./(?:html/)?([A-Za-z0-9_]+)\.html(#.*)?$", href)
         if m:
-            target = f"../{m.group(1).lower()}.md"
-            a["href"] = target + (m.group(2) or "")
+            name_lc = m.group(1).lower()
+            anchor = m.group(2) or ""
+            local_target = f"{name_lc}.md"
+            if local_target in known_targets:
+                a["href"] = f"../{name_lc}.md" + anchor
+            else:
+                a["href"] = to_upstream_url(f"{m.group(1)}.html", anchor)
             continue
+
         # Sibling .html within the same dir.
         m = re.match(r"^([A-Za-z0-9_]+)\.html(#.*)?$", href)
         if m:
-            target = f"{m.group(1).lower()}.md"
-            a["href"] = target + (m.group(2) or "")
+            name_lc = m.group(1).lower()
+            anchor = m.group(2) or ""
+            if in_tag_names:
+                local_target = f"tag-names/{name_lc}.md"
+                if local_target in known_targets:
+                    a["href"] = f"{name_lc}.md" + anchor
+                else:
+                    a["href"] = to_upstream_url(f"TagNames/{m.group(1)}.html", anchor)
+            else:
+                local_target = f"{name_lc}.md"
+                if local_target in known_targets:
+                    a["href"] = f"{name_lc}.md" + anchor
+                else:
+                    a["href"] = to_upstream_url(f"{m.group(1)}.html", anchor)
             continue
 
 
@@ -108,12 +150,13 @@ def convert(
     upstream_version: str,
     upstream_commit: str,
     upstream_source_rel: str,
+    known_targets: set[str],
 ) -> None:
     raw = source.read_text(encoding="utf-8", errors="replace")
     soup = BeautifulSoup(raw, "html.parser")
     strip_noise(soup)
     in_tag_names = "tag-names" in str(output).replace("\\", "/")
-    rewrite_intra_links(soup, in_tag_names=in_tag_names)
+    rewrite_intra_links(soup, in_tag_names=in_tag_names, known_targets=known_targets)
 
     md_body = markdownify(
         str(soup),
@@ -161,7 +204,12 @@ def main() -> int:
     p.add_argument("--upstream-commit", required=True)
     p.add_argument("--upstream-source-rel", required=True,
                    help="Path inside repo, e.g. vendor/exiftool/html/geotag.html")
+    p.add_argument("--known-targets", default="",
+                   help="Comma-separated list of allowlist output paths "
+                        "(relative to upstream/). Targets not in this list "
+                        "are rewritten to upstream URLs.")
     args = p.parse_args()
+    known = set(t for t in args.known_targets.split(",") if t)
 
     if not args.source.is_file():
         print(f"error: source not found: {args.source}", file=sys.stderr)
@@ -174,6 +222,7 @@ def main() -> int:
         upstream_version=args.upstream_version,
         upstream_commit=args.upstream_commit,
         upstream_source_rel=args.upstream_source_rel,
+        known_targets=known,
     )
     return 0
 
