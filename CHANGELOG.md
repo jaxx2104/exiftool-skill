@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-05-04
+
 ### Added (Phase 1 — foundation)
 - Repository scaffolding: `.gitignore`, `.gitattributes`, `LICENSE`
   (Artistic-1.0-Perl OR GPL-1.0-or-later), `README.md`,
@@ -87,6 +89,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pass rate 5/8 (62.5%) vs baseline 4/8 (50%); train pass rate 6/12
   for both. The optimized description is more aggressive about
   triggering on informal phrasings ("wipe gps", "before I post").
-
-### Pending (later phases)
-- Plugin marketplace registration & v0.1.0 GitHub release (Phase 5).
