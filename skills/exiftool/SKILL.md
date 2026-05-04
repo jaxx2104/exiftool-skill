@@ -35,7 +35,7 @@ task file; writes additionally require `references/safety.md`.
 | 個人情報除去 (公開前 sanitize)                | `references/tasks/sanitize.md`     |
 | Need a tag name?                             | `references/tag-cheatsheet.md`     |
 | Writing files? (REQUIRED before any write)   | `references/safety.md`             |
-| Deep dive on upstream                        | `references/upstream/INDEX.md` *(populated in Phase 2)* |
+| Deep dive on upstream                        | `references/upstream/INDEX.md` |
 
 ## Critical safety rules
 
@@ -76,5 +76,7 @@ All scripts accept `--help` for usage.
 
 When the relevant `references/tasks/*.md` does not cover the user's
 request, or when the user asks about an option the task file does not
-mention, consult `references/upstream/INDEX.md` (populated in Phase 2)
-to find the upstream documentation excerpt.
+mention, consult `references/upstream/INDEX.md` to find the upstream
+documentation excerpt. Each upstream file's frontmatter records which
+upstream HTML page it derives from and the upstream version pinned in
+`vendor/exiftool/`.
