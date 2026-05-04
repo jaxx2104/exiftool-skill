@@ -1,0 +1,61 @@
+{
+  "skill_name": "exiftool",
+  "evals": [
+    {
+      "id": 1,
+      "name": "view-gps-single",
+      "prompt": "tests/fixtures/photo.jpg の GPS 座標教えて",
+      "expected_output": "lat/lon が答えに含まれる、書き込みは行わない",
+      "files": ["tests/fixtures/photo.jpg"]
+    },
+    {
+      "id": 2,
+      "name": "strip-gps-batch",
+      "prompt": "tests/fixtures/share/ にある写真を SNS に上げる前に GPS 全部消して",
+      "expected_output": "件数を先に提示、確認後にバッチ削除、_original の扱いを明示",
+      "files": ["tests/fixtures/share/"]
+    },
+    {
+      "id": 3,
+      "name": "shift-datetime-tz",
+      "prompt": "旅行で撮った写真、カメラの時計が日本時間のままで撮った分があるんだけど、UTC+0 の場所で撮影したやつだけ 9 時間戻して。対象は tests/fixtures/trip/ 以下。",
+      "expected_output": "対象絞り込みを -if で行う、AllDates または DateTimeOriginal の更新",
+      "files": ["tests/fixtures/trip/"]
+    },
+    {
+      "id": 4,
+      "name": "rename-by-date",
+      "prompt": "tests/fixtures/downloads/ の写真を撮影日で YYYY/MM/DD/ のフォルダに分けてリネームして",
+      "expected_output": "-Directory<DateTimeOriginal -d, dry-run 提案",
+      "files": ["tests/fixtures/downloads/"]
+    },
+    {
+      "id": 5,
+      "name": "geotag-from-gpx",
+      "prompt": "tests/fixtures/track.gpx に合わせて tests/fixtures/photos/ 全部 geotag して",
+      "expected_output": "-geotag 使用、時刻ズレ可能性に言及",
+      "files": ["tests/fixtures/track.gpx", "tests/fixtures/photos/"]
+    },
+    {
+      "id": 6,
+      "name": "video-gps-track",
+      "prompt": "GoPro で撮った tests/fixtures/gopro.mp4 から GPS トラックを GPX で出して",
+      "expected_output": "-ee の使用、または .fmt の言及",
+      "files": ["tests/fixtures/gopro.mp4"]
+    },
+    {
+      "id": 7,
+      "name": "copy-tags-sidecar",
+      "prompt": "現像した tests/fixtures/develop.tiff に、元 raw (tests/fixtures/source.cr3) の Exif 全部コピーしたい",
+      "expected_output": "-tagsFromFile の使用",
+      "files": ["tests/fixtures/develop.tiff", "tests/fixtures/source.cr3"]
+    },
+    {
+      "id": 8,
+      "name": "csv-export-camera-info",
+      "prompt": "tests/fixtures/photos/ 配下全部の Make / Model / LensModel を CSV で出して",
+      "expected_output": "-csv -Make -Model -LensModel -r",
+      "files": ["tests/fixtures/photos/"]
+    }
+  ]
+}
