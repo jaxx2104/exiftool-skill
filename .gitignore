@@ -26,3 +26,6 @@ dist/
 # Temporary
 *.tmp
 *.log
+
+# Claude Code session state (e.g., scheduled_tasks.lock from ScheduleWakeup)
+.claude/
