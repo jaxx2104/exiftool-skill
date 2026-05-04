@@ -6,10 +6,10 @@ renames safely before committing.
 
 ## When this applies
 Read this file when the user says things like:
-- 「撮影日でリネーム」 / "rename by capture date"
-- 「YYYY/MM/DD/ のフォルダに分けて」 / "organize into year/month/day folders"
-- 「ファイル名衝突したらどうなる？」 / "what about duplicate filenames"
-- 「実際に動かす前に名前確認したい」 / "preview before running"
+- "rename by capture date"
+- "organize into year/month/day folders"
+- "what about duplicate filenames"
+- "preview before running"
 
 ## Pre-flight checks
 1. Rename is a write to `FileName` and `Directory` (filesystem ops, not
@@ -22,7 +22,7 @@ Read this file when the user says things like:
 ## Common patterns
 
 ### Pattern: Rename one file by capture date
-**Input**: 「photo.jpg を撮影日で rename」 / "rename photo.jpg by date"
+**Input**: "rename photo.jpg by date"
 **Command**:
 ```sh
 exiftool '-FileName<DateTimeOriginal' \
@@ -33,7 +33,7 @@ applies a date format, `%%le` lowercases the original extension (P-009).
 Result: `photo.jpg` → `20240315_103022.jpg`.
 
 ### Pattern: Preview a bulk rename without renaming
-**Input**: 「実際に動かす前に確認」 / "show me what would happen first"
+**Input**: "show me what would happen first"
 **Command**:
 ```sh
 exiftool '-TestName<DateTimeOriginal' \
@@ -45,7 +45,7 @@ touching the filesystem. This is the dry-run idiom for renames.
 `scripts/dry-rename.sh` wraps this pattern.
 
 ### Pattern: Bulk rename by capture date
-**Input**: 「全部 撮影日で rename」 / "rename all by capture date"
+**Input**: "rename all by capture date"
 **Command**:
 ```sh
 # 1) Preview first:
@@ -62,7 +62,7 @@ exiftool '-FileName<DateTimeOriginal' \
 single safe/destructive switch.
 
 ### Pattern: Organize into date-based folders
-**Input**: 「YYYY/MM/DD/ にフォルダ分けして」 / "split into year/month/day folders"
+**Input**: "split into year/month/day folders"
 **Command**:
 ```sh
 # Preview:
@@ -79,7 +79,7 @@ expression handles both filename and folder placement at once. exiftool
 creates intermediate directories as needed.
 
 ### Pattern: Handle filename collisions
-**Input**: 「同じ秒に撮ったやつがある」 / "two shots in the same second"
+**Input**: "two shots in the same second"
 **Command**:
 ```sh
 exiftool '-FileName<DateTimeOriginal' \
@@ -92,7 +92,7 @@ underscore-separator explicit). Without a counter, exiftool refuses
 the second write.
 
 ### Pattern: Use a tag other than capture date
-**Input**: 「Make_Model_DateTime みたいな名前にしたい」
+**Input**: "name files like Make_Model_DateTime"
 **Command**:
 ```sh
 exiftool '-FileName<${Make}_${Model}_${DateTimeOriginal}.%le' \
