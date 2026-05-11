@@ -1,8 +1,8 @@
 ---
 generated_from: vendor/exiftool/html/examples.html
-upstream_version: 13.57
-upstream_commit: dae9b7a8
-generated_at: 2026-05-04
+upstream_version: 13.58
+upstream_commit: 38bdbace
+generated_at: 2026-05-11
 do_not_edit: true
 ---
 

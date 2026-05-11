@@ -1,8 +1,8 @@
 ---
 generated_from: vendor/exiftool/html/TagNames/FujiFilm.html
-upstream_version: 13.57
-upstream_commit: dae9b7a8
-generated_at: 2026-05-04
+upstream_version: 13.58
+upstream_commit: 38bdbace
+generated_at: 2026-05-11
 do_not_edit: true
 ---
 
@@ -57,7 +57,7 @@ Tags extracted from the header of RAF images.
 
 > |  |  |  |  |  |  |  |  |  |  |  |  |  |
 > | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-> | | Index1 | Tag Name | Writable | Values / Notes | | --- | --- | --- | --- | | 60 | RAFVersion | no |  | | 108 | RAFCompression | no | 0 = Uncompressed  2 = Lossless  3 = Lossy | |
+> | | Index1 | Tag Name | Writable | Values / Notes | | --- | --- | --- | --- | | 60 | FirmwareVersion | no |  | | 108 | RAFCompression | no | 0 = Uncompressed  2 = Lossless  3 = Lossy | |
 
 ## FujiFilm RAF Tags
 
@@ -114,6 +114,6 @@ This information is found in MOV videos from some FujiFilm cameras.
 
 (This document generated automatically by Image::ExifTool::BuildTagLookup)
   
-*Last revised Sep 20, 2025*
+*Last revised May 1, 2026*
 
 [<-- ExifTool Tag Names](https://exiftool.org/TagNames/index.html)
