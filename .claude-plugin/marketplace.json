@@ -7,7 +7,12 @@
   "plugins": [
     {
       "name": "exiftool",
-      "source": ".",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/jaxx2104/exiftool-skill.git",
+        "path": ".",
+        "ref": "main"
+      },
       "description": "Comprehensive ExifTool skill: view, edit, strip, geotag, rename, and sanitize image/video/audio metadata via natural language."
     }
   ]
