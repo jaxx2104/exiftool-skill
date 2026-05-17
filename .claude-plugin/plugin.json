@@ -1,6 +1,6 @@
 {
   "name": "exiftool",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Read/write EXIF, IPTC, XMP, GPS, MakerNote metadata via natural language.",
   "author": "jaxx2104",
   "license": "Artistic-1.0-Perl OR GPL-1.0-or-later",

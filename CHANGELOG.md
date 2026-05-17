@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-05-17
+
+### Fixed
+- Quote the multi-line `description` in `skills/exiftool/SKILL.md` so strict
+  YAML parsers (e.g. APM) accept it. The previous unquoted scalar contained
+  several `: ` sequences (`Core intents:`, `Do NOT trigger for pixel-level
+  work:`, …) which were misread as nested mapping keys.
+
 ## [0.1.0] - 2026-05-04
 
 ### Added (Phase 1 — foundation)
