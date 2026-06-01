@@ -1,8 +1,8 @@
 ---
 generated_from: vendor/exiftool/html/faq.html
-upstream_version: 13.57
-upstream_commit: dae9b7a8
-generated_at: 2026-05-04
+upstream_version: 13.59
+upstream_commit: 2200871d
+generated_at: 2026-06-01
 do_not_edit: true
 ---
 

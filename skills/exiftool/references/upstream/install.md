@@ -1,8 +1,8 @@
 ---
 generated_from: vendor/exiftool/html/install.html
-upstream_version: 13.57
-upstream_commit: dae9b7a8
-generated_at: 2026-05-04
+upstream_version: 13.59
+upstream_commit: 2200871d
+generated_at: 2026-06-01
 do_not_edit: true
 ---
 
@@ -57,14 +57,14 @@ documentation or some other files of the full distribution.
 
 1. **Download** the 32-bit or 64-bit **Windows Executable** from the [ExifTool home page](https://exiftool.org/index.html).
      
-   (The file you download should be named "`exiftool-13.57_32.zip`"
-   or "`exiftool-13.57_64.zip`".)
-2. **Extract the "`exiftool-13.57_xx`" folder** from
+   (The file you download should be named "`exiftool-13.59_32.zip`"
+   or "`exiftool-13.59_64.zip`".)
+2. **Extract the "`exiftool-13.59_xx`" folder** from
    the "`.zip`" file, and place it **on your Desktop**.
      
-   (Double-click on "`exiftool-13.57_xx.zip`" to open
-   the archive, then drag "`exiftool-13.57_xx`" folder to your Desktop.)
-3. Open the "`exiftool-13.57_xx`" folder from your Desktop.
+   (Double-click on "`exiftool-13.59_xx.zip`" to open
+   the archive, then drag "`exiftool-13.59_xx`" folder to your Desktop.)
+3. Open the "`exiftool-13.59_xx`" folder from your Desktop.
 
 You can now double-click on "`exiftool(-k).exe`" in this folder to read
 the application documentation, or drag-and-drop files and folders to run exiftool on
@@ -98,7 +98,7 @@ can be downloaded from
 
 1. **Download** the **Image-ExifTool distribution** from the [ExifTool home page](https://exiftool.org/index.html)
      
-   (The file you download should be named "`Image-ExifTool-13.57.tar.gz`".)
+   (The file you download should be named "`Image-ExifTool-13.59.tar.gz`".)
 2. **Extract the ExifTool files** from the archive.
      
    (The archive is a gzipped tar file, and can be opened with
@@ -143,7 +143,7 @@ in the MacOS package. Both versions run natively on PPC and Intel Macs.
 
 1. **Download** the **ExifTool MacOS Package** from the [ExifTool home page](https://exiftool.org/index.html).
      
-   (The file you download should be named "`ExifTool-13.57.pkg`".)
+   (The file you download should be named "`ExifTool-13.59.pkg`".)
 2. **Install** as a normal **MacOS package**.
      
    (Double-click on the install package, and follow the instructions.
@@ -165,7 +165,7 @@ which seems incongruous with the concept of open source software so I refuse to 
 it, hence the following inconvenience... - PH*
 
 - In MacOS 10.8 to MacOS 14, you may see this message when you try to open the install package:
-  > "ExifTool-13.57.pkg" can't be opened because it is from an
+  > "ExifTool-13.59.pkg" can't be opened because it is from an
   > unidentified developer.
 
   The solution is to control-click on the pkg then
@@ -176,7 +176,7 @@ it, hence the following inconvenience... - PH*
   [here](http://news.softpedia.com/news/Fix-OS-X-Error-Application-Can-t-Be-Opened-Because-it-Is-from-an-Unidentified-Developer-407375.shtml)
   for a full description.)
 - In MacOS 15 or later, you may see this message when you try to open the install package:
-  > Apple could not verify "ExifTool-13.57.pkg" is free of malware
+  > Apple could not verify "ExifTool-13.59.pkg" is free of malware
   > that may harm your Mac or compromise your privacy.
 
   The solution is to
@@ -186,12 +186,12 @@ it, hence the following inconvenience... - PH*
   is to remove the quarantine flag by running this command in a Terminal window,
   allowing the installer to be launched:
   > ```
-  > exiftool -XAttrQuarantine= ExifTool-13.57.pkg
+  > exiftool -XAttrQuarantine= ExifTool-13.59.pkg
   > ```
 
   or if you don't already have ExifTool installed, you can do this:
   > ```
-  > xattr -d com.apple.quarantine ExifTool-13.57.pkg
+  > xattr -d com.apple.quarantine ExifTool-13.59.pkg
   > ```
 
   Note that you should "cd" into the directory containing the package file
@@ -203,14 +203,14 @@ it, hence the following inconvenience... - PH*
 1. **Download** the **Image-ExifTool distribution** from the [ExifTool home page](https://exiftool.org/index.html)
    to your Desktop.
      
-   (The file you download should be named "`Image-ExifTool-13.57.tar.gz`".)
+   (The file you download should be named "`Image-ExifTool-13.59.tar.gz`".)
 2. **Launch** the **Terminal** application from the Utilities folder in your Applications folder.
 3. In the Terminal window, **type the following**:
 
    ```
        cd ~/Desktop
-       tar -xzf Image-ExifTool-13.57.tar.gz
-       cd Image-ExifTool-13.57
+       tar -xzf Image-ExifTool-13.59.tar.gz
+       cd Image-ExifTool-13.59
        sudo cp -r exiftool lib /usr/local/bin
    ```
 
@@ -247,13 +247,13 @@ You can now run exiftool by typing "`exiftool`" in a Terminal window.
 
 1. **Download** the **Image-ExifTool distribution** from the [ExifTool home page](https://exiftool.org/index.html)
      
-   (The file you download should be named "`Image-ExifTool-13.57.tar.gz`".)
+   (The file you download should be named "`Image-ExifTool-13.59.tar.gz`".)
 2. **Unpack the distribution** and **make it your current directory** by typing:
 
    ```
        cd <your download directory>
-       gzip -dc Image-ExifTool-13.57.tar.gz | tar -xf -
-       cd Image-ExifTool-13.57
+       gzip -dc Image-ExifTool-13.59.tar.gz | tar -xf -
+       cd Image-ExifTool-13.59
    ```
 
    (At this point you may run exiftool by typing

@@ -1,6 +1,6 @@
 # Upstream reference index (auto-generated)
 
-Generated from `vendor/exiftool/` at version `13.57` (commit `dae9b7a8`).
+Generated from `vendor/exiftool/` at version `13.59` (commit `2200871d`).
 
 | File | Source |
 |------|--------|

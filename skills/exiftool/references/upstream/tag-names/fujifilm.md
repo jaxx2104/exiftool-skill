@@ -1,8 +1,8 @@
 ---
 generated_from: vendor/exiftool/html/TagNames/FujiFilm.html
-upstream_version: 13.57
-upstream_commit: dae9b7a8
-generated_at: 2026-05-04
+upstream_version: 13.59
+upstream_commit: 2200871d
+generated_at: 2026-06-01
 do_not_edit: true
 ---
 
@@ -57,7 +57,7 @@ Tags extracted from the header of RAF images.
 
 > |  |  |  |  |  |  |  |  |  |  |  |  |  |
 > | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-> | | Index1 | Tag Name | Writable | Values / Notes | | --- | --- | --- | --- | | 60 | RAFVersion | no |  | | 108 | RAFCompression | no | 0 = Uncompressed  2 = Lossless  3 = Lossy | |
+> | | Index1 | Tag Name | Writable | Values / Notes | | --- | --- | --- | --- | | 60 | FirmwareVersion | no |  | | 108 | RAFCompression | no | 0 = Uncompressed  2 = Lossless  3 = Lossy | |
 
 ## FujiFilm RAF Tags
 
@@ -66,9 +66,9 @@ FujiFilm RAF format, as well as EXIF information stored inside an embedded
 JPEG preview image. The table below lists tags currently decoded from the
 RAF-format information.
 
-> |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-> | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-> | | Tag ID | Tag Name | Writable | Values / Notes | | --- | --- | --- | --- | | 0x0100 | RawImageFullSize | no | (including borders) | | 0x0110 | RawImageCropTopLeft | no | (top margin first, then left margin) | | 0x0111 | RawImageCroppedSize | no | (including borders) | | 0x0115 | RawImageAspectRatio | no |  | | 0x0117 | RawZoomActive | no | 0 = No  1 = Yes | | 0x0118 | RawZoomTopLeft | no | (relative to RawCroppedImageSize) | | 0x0119 | RawZoomSize | no | (relative to RawCroppedImageSize) | | 0x0121 | RawImageSize | no |  | | 0x0130 | FujiLayout | no |  | | 0x0131 | XTransLayout | no |  | | 0x2000 | WB\_GRGBLevelsAuto | no |  | | 0x2100 | WB\_GRGBLevelsDaylight | no |  | | 0x2200 | WB\_GRGBLevelsCloudy | no |  | | 0x2300 | WB\_GRGBLevelsDaylightFluor | no |  | | 0x2301 | WB\_GRGBLevelsDayWhiteFluor | no |  | | 0x2302 | WB\_GRGBLevelsWhiteFluorescent | no |  | | 0x2310 | WB\_GRGBLevelsWarmWhiteFluor | no |  | | 0x2311 | WB\_GRGBLevelsLivingRoomWarmWhiteFluor | no |  | | 0x2400 | WB\_GRGBLevelsTungsten | no |  | | 0x2ff0 | WB\_GRGBLevels | no |  | | 0x9200 | RelativeExposure | no |  | | 0x9650 | RawExposureBias | no |  | | 0xc000 | RAFData | - | --> [FujiFilm RAFData Tags](fujifilm.md#RAFData) | |
+> |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+> | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+> | | Tag ID | Tag Name | Writable | Values / Notes | | --- | --- | --- | --- | | 0x0100 | RawImageFullSize | no | (including borders) | | 0x0110 | RawImageCropTopLeft | no | (top margin first, then left margin) | | 0x0111 | RawImageCroppedSize | no | (including borders) | | 0x0115 | RawImageAspectRatio | no |  | | 0x0117 | RawZoomActive | no | 0 = No  1 = Yes | | 0x0118 | RawZoomTopLeft | no | (relative to RawCroppedImageSize) | | 0x0119 | RawZoomSize | no | (relative to RawCroppedImageSize) | | 0x0121 | RawImageSize | no |  | | 0x0130 | FujiLayout | no |  | | 0x0131 | XTransLayout | no |  | | 0x2000 | WB\_GRGBLevelsAuto | no |  | | 0x2100 | WB\_GRGBLevelsDaylight | no |  | | 0x2200 | WB\_GRGBLevelsCloudy | no |  | | 0x2300 | WB\_GRGBLevelsDaylightFluor | no |  | | 0x2301 | WB\_GRGBLevelsDayWhiteFluor | no |  | | 0x2302 | WB\_GRGBLevelsWhiteFluorescent | no |  | | 0x2310 | WB\_GRGBLevelsWarmWhiteFluor | no |  | | 0x2311 | WB\_GRGBLevelsLivingRoomWarmWhiteFluor | no |  | | 0x2400 | WB\_GRGBLevelsTungsten | no |  | | 0x2410 | WB\_GRGBLevelsFlash | no |  | | 0x2ff0 | WB\_GRGBLevels | no |  | | 0x9200 | RelativeExposure | no |  | | 0x9650 | RawExposureBias | no |  | | 0xc000 | RAFData | - | --> [FujiFilm RAFData Tags](fujifilm.md#RAFData) | |
 
 ## FujiFilm RAFData Tags
 
@@ -114,6 +114,6 @@ This information is found in MOV videos from some FujiFilm cameras.
 
 (This document generated automatically by Image::ExifTool::BuildTagLookup)
   
-*Last revised Sep 20, 2025*
+*Last revised May 21, 2026*
 
 [<-- ExifTool Tag Names](https://exiftool.org/TagNames/index.html)
